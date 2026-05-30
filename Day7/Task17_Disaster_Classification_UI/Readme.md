@@ -1,4 +1,4 @@
-# 🚨 Crisis Dispatch Intelligence Center — Disaster Classification Pipeline
+# 🚨  Disaster Classification 
 
 An end-to-end, high-performance machine learning pipeline designed to automatically detect emergency signals from unstructured text feeds (e.g., social media transmissions, SMS streams, dispatch reports) and route them to appropriate rescue channels. 
 
@@ -132,19 +132,9 @@ The selection of **Logistic Regression with Balanced Weights** as the production
 
 ---
 
-## 🖥️ UI Dashboard Features
-The front-end client provides a gorgeous, highly responsive dark-themed dashboard built to mimic tactical emergency dispatch software:
-* **Glassmorphic Glass Panels & Neon Highlights**: Premium visual styling with active animations and interactive states.
-* **Quick-Test Scenarios**: Clickable buttons containing realistic crisis messages to instantly demonstrate model capabilities.
-* **Hierarchical Step Visualization**: Graphically outlines the classification progress through Step 1 (Disaster Detection) and Step 2 (Granular Category Classification).
-* **Confidence Progress Trackers**: Real-time animated bars reflecting the model's prediction probability.
-* **Dynamic Action Alerts**: Programmatically alerts dispatchers with specific dispatch recommendations tailored to the predicted disaster category.
-
----
-
 ## 📁 Project Directory Structure
 ```
-Disaster_Detection(All ML)UI/
+Disaster_Classification_UI/
 │
 ├── client/
 │   ├── app.html         # Frontend Dashboard Layout (Tactical Dark UI)

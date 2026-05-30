@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crisis Dispatch Intelligence Center - Disaster Classification</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="app.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+    <div class="stars-overlay"></div>
+    <div class="grid-overlay"></div>
+
+    <div class="app-container">
+        <header class="app-header">
+            <div class="header-logo">
+                <i class="fa-solid fa-triangle-exclamation warning-icon pulse"></i>
+                <div class="logo-text">
+                    <h1>CRISIS DISPATCH</h1>
+                    <span>INTELLIGENCE CLASSIFIER</span>
+                </div>
+            </div>
+        </header>
+
+        <main class="dashboard-grid">
+            
+            <section class="panel input-panel">
+                <div class="panel-header">
+                    <i class="fa-solid fa-keyboard icon-accent"></i>
+                    <h2>INCOMING TRANSMISSION</h2>
+                </div>
+                
+                <div class="form-group">
+                    <label for="uiMessage">Emergency Text Message / Social Feed / Report</label>
+                    <div class="textarea-wrapper">
+                        <textarea id="uiMessage" placeholder="Paste emergency message, tweet, or dispatch report here... (e.g. Heavy floods in city area, multiple buildings submerged, urgent rescue teams needed!)" rows="6"></textarea>
+                        <span class="glow-border"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Quick Test Scenarios (Model Predicts Classes)</label>
+                    <div class="sample-scenarios">
+                        <button class="btn btn-secondary btn-sample" data-text="Multiple casualties confirmed. Ten people died and many others are severely injured.">
+                            <i class="fa-solid fa-truck-medical"></i> Injured People
+                        </button>
+                        <button class="btn btn-secondary btn-sample" data-text="Main highway blocked by debris and landslides. Power grids are cut off in the north district. No vehicles can pass.">
+                            <i class="fa-solid fa-road-barrier"></i> Damage Report
+                        </button>
+                        <button class="btn btn-secondary btn-sample" data-text="Urgent! Families are trapped on rooftops due to rising waters. No food, blankets, or clean drinking water left, help!">
+                            <i class="fa-solid fa-basket-shopping"></i> Needs & Requests
+                        </button>
+                        <button class="btn btn-secondary btn-sample" data-text="Our community group is ready to ship 500 food packets, clean water boxes, and volunteer doctors to the affected zones.">
+                            <i class="fa-solid fa-hand-holding-hand"></i> Mutual Aid/Donation
+                        </button>
+                        <button class="btn btn-secondary btn-sample" data-text="We are trapped inside. Missing child last seen wearing a blue shirt. If anyone has contact details please let us know">
+                            <i class="fa-solid fa-person-circle-question"></i> Affected Person
+                        </button>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary" id="btnClassify" onclick="onClickedClassifyMessage()">
+                    <span class="btn-content">
+                        <i class="fa-solid fa-microchip-ai spinner-icon"></i>
+                        <span>ANALYZE TRANSMISSION</span>
+                    </span>
+                    <span class="btn-glow"></span>
+                </button>
+            </section>
+
+            <section class="panel results-panel">
+                
+                <div class="panel-header">
+                    <i class="fa-solid fa-chart-bar icon-accent"></i>
+                    <h2>CLASSIFICATION REPORT</h2>
+                </div>
+
+                <div class="result-display-card" id="resultCard">
+                    <div class="result-placeholder" id="resultPlaceholder">
+                        <i class="fa-solid fa-circle-nodes placeholder-icon"></i>
+                        <p>Awaiting transmission analysis...</p>
+                    </div>
+
+                    <div class="result-content hidden" id="resultContent">
+                        
+                        <div class="step-container" id="binaryStepContainer">
+                            <div class="step-header">
+                                <span class="step-number">STEP 1</span>
+                                <span class="step-title">DISASTER DETECTOR SIGNAL ANALYSIS</span>
+                            </div>
+                            
+                            <div class="result-metric-row">
+                                <div class="metric-block">
+                                    <span class="metric-label">SIGNAL THREAT STATUS</span>
+                                    <div class="metric-value badge" id="uiDisasterStatus">PENDING</div>
+                                </div>
+                            </div>
+
+                            <div class="confidence-container">
+                                <div class="confidence-header">
+                                    <span>DETECTOR CONFIDENCE</span>
+                                    <span id="uiBinaryConfidenceText">0.00%</span>
+                                </div>
+                                <div class="confidence-track">
+                                    <div class="confidence-fill" id="uiBinaryConfidenceFill"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="step-divider"></div>
+
+                        <div class="step-container" id="categoryStepContainer">
+                            <div class="step-header">
+                                <span class="step-number">STEP 2</span>
+                                <span class="step-title">CRISIS CATEGORY CLASSIFIER</span>
+                            </div>
+                            
+                            <div class="category-bypassed-view" id="categoryBypassedView">
+                                <i class="fa-solid fa-circle-check bypassed-icon"></i>
+                                <div class="bypassed-details">
+                                    <h4>CLASSIFICATION BYPASSED</h4>
+                                    <p>The transmission is classified as non-disaster. No emergency dispatch needed.</p>
+                                </div>
+                            </div>
+
+                            <div class="category-active-view hidden" id="categoryActiveView">
+                                <div class="result-metric-row">
+                                    <div class="metric-block">
+                                        <span class="metric-label">IDENTIFIED CRISIS CATEGORY</span>
+                                        <div class="metric-value badge" id="uiCategory">UNKNOWN</div>
+                                    </div>
+                                </div>
+
+                                <div class="confidence-container">
+                                    <div class="confidence-header">
+                                        <span>CATEGORY MODEL CONFIDENCE</span>
+                                        <span id="uiConfidenceText">0.00%</span>
+                                    </div>
+                                    <div class="confidence-track">
+                                        <div class="confidence-fill" id="uiConfidenceFill"></div>
+                                    </div>
+                                </div>
+
+                                <div class="action-alert" id="actionAlert">
+                                    <i class="fa-solid fa-shield-halved alert-icon"></i>
+                                    <div class="alert-details">
+                                        <h4 id="uiAlertTitle">PREDICTING...</h4>
+                                        <p id="uiAlertMessage">Transmission data evaluated.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="capabilities-card">
+                    <h3>CLASSIFICATION CAPABILITIES</h3>
+                    <div class="categories-list" id="uiCategoriesList">
+                        <div class="category-skeleton"></div>
+                        <div class="category-skeleton"></div>
+                        <div class="category-skeleton"></div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+    
+    <script src="app.js"></script>
+</body>
+</html>

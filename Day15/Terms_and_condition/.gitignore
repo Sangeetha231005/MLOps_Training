@@ -1,0 +1,34 @@
+# --- Python Specific ---
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.venv/
+env/
+ENV/
+*.egg-info/
+.pytest_cache/
+
+# --- Environment Variables & Secrets ---
+.env
+.env.*
+backend/.env
+
+# --- Local Databases & Data Store (ChromaDB / SQLite) ---
+data/chromadb/
+data/truth_terms.db
+
+# --- Editor / IDE Configuration ---
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# --- OS Specific Files ---
+.DS_Store
+.DS_Store?
+Thumbs.db
+ehthumbs.db
